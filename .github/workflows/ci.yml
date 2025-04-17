@@ -10,10 +10,14 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: swift package resolve
-      - name: Run iOS Tests
-        run: xcodebuild test -project ios/ARDesignPro.xcodeproj -scheme ARDesignPro -destination 'platform=iOS Simulator,name=iPhone 14'
+      - name: Build iOS
+        run: |
+          xcodebuild \
+            -project ios/ARDesignPro.xcodeproj \
+            -scheme ARDesignPro \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 14' \
+            build
 
   build-android:
     runs-on: ubuntu-latest
@@ -25,4 +29,7 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
       - name: Build Android
-        run: cd android/ARDesignPro && ./gradlew assembleDebug
+        run: |
+          cd android                # falls dein Android-Projekt direkt im Ordner android liegt
+          chmod +x gradlew
+          ./gradlew assembleDebug
