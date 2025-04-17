@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+xcuserdata/
+
+# Swift Packages
+Packages/
+
+# Android
+.gradle/
+/local.properties
+/*.iml
+/captures/
+/.externalNativeBuild
+
+# JetBrains IDEs
+.idea/
+
+# Logs
+*.log
+
+# Node
+node_modules/
