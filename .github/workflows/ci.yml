@@ -1,4 +1,4 @@
-name: CI
+name: Android CI
 
 on:
   push:
@@ -6,19 +6,6 @@ on:
       - main
 
 jobs:
-  build-ios:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build iOS
-        run: |
-          xcodebuild \
-            -project ios/ARDesignPro.xcodeproj \
-            -scheme ARDesignPro \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 14' \
-            build
-
   build-android:
     runs-on: ubuntu-latest
     steps:
@@ -26,10 +13,11 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '11'
-      - name: Build Android
+      - name: Grant execute permission for Gradle
+        run: chmod +x android/ARDesignPro/gradlew
+      - name: Build Debug
         run: |
-          cd android                # falls dein Android-Projekt direkt im Ordner android liegt
-          chmod +x gradlew
+          cd android/ARDesignPro
           ./gradlew assembleDebug
